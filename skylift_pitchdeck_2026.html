@@ -1,0 +1,536 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Skylift Protocol — Pitch Deck 2026</title>
+  <meta name="description" content="Skylift Protocol — Infrastructure Before Traffic. Pitch Deck 2026." />
+  <style>
+    :root{
+      --bg0:#060912;
+      --bg1:#070b18;
+      --ink:#e9eefc;
+      --muted:#a7b3d6;
+      --muted2:#7f8ab0;
+      --neon:#4bf3ff;
+      --neon2:#9a6bff;
+      --warn:#ff6b6b;
+      --good:#35f0a2;
+      --shadow: 0 30px 80px rgba(0,0,0,0.55);
+      --radius: 28px;
+      --radius2: 18px;
+      --maxw: 1160px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--ink);
+      background:
+        radial-gradient(1200px 800px at 15% 20%, rgba(75,243,255,0.18), transparent 55%),
+        radial-gradient(900px 700px at 80% 30%, rgba(154,107,255,0.16), transparent 55%),
+        radial-gradient(1100px 900px at 50% 110%, rgba(53,240,162,0.10), transparent 55%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+      overflow:hidden;
+    }
+    .grid{
+      position:fixed; inset:0;
+      background-image:
+        linear-gradient(to right, rgba(255,255,255,0.035) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 64px 64px;
+      mask-image: radial-gradient(closest-side at 50% 40%, rgba(0,0,0,0.75), transparent 70%);
+      pointer-events:none;
+      opacity:.55;
+    }
+    .corridors{
+      position:fixed; inset:-20px;
+      pointer-events:none;
+      opacity:.55;
+      filter: drop-shadow(0 0 18px rgba(75,243,255,0.35));
+    }
+    .wrap{height:100%;display:flex;flex-direction:column;}
+    header{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:18px 22px;position:relative;z-index:3;
+    }
+    .brand{display:flex;gap:12px;align-items:center;user-select:none;}
+    .mark{
+      width:36px;height:36px;border-radius:12px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(75,243,255,0.8), rgba(75,243,255,0.0) 55%),
+        radial-gradient(circle at 70% 70%, rgba(154,107,255,0.8), rgba(154,107,255,0.0) 55%),
+        linear-gradient(135deg, rgba(255,255,255,0.18), rgba(255,255,255,0.05));
+      border:1px solid rgba(255,255,255,0.14);
+      box-shadow: var(--shadow);
+    }
+    .brand .t1{font-weight:800;letter-spacing:.2px}
+    .brand .t2{font-size:12px;color:var(--muted2);margin-top:1px}
+    .topright{display:flex;gap:10px;align-items:center;font-size:12px;color:var(--muted2);}
+    .pill{
+      padding:8px 10px;border-radius:999px;
+      background: rgba(255,255,255,0.06);
+      border:1px solid rgba(255,255,255,0.10);
+      backdrop-filter: blur(10px);
+    }
+    main{
+      flex:1;display:flex;align-items:center;justify-content:center;
+      padding:0 18px 22px;position:relative;z-index:2;
+    }
+    .deck{
+      width:min(var(--maxw), 100%);
+      height:min(680px, calc(100vh - 120px));
+      border-radius:var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
+      border:1px solid rgba(255,255,255,0.12);
+      box-shadow: var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+    .slide{
+      position:absolute; inset:0;
+      padding:44px 52px;
+      display:flex;flex-direction:column;gap:18px;
+      opacity:0; transform: translateX(20px) scale(0.99);
+      transition: opacity .35s ease, transform .35s ease;
+    }
+    .slide.active{opacity:1;transform: translateX(0) scale(1);}
+    .kicker{
+      display:flex;align-items:center;gap:10px;
+      color:var(--muted2);font-size:12px;text-transform:uppercase;letter-spacing:.18em;
+    }
+    .dot{
+      width:10px;height:10px;border-radius:999px;
+      background: radial-gradient(circle at 30% 30%, rgba(75,243,255,0.95), rgba(75,243,255,0.2));
+      box-shadow: 0 0 24px rgba(75,243,255,0.35);
+    }
+    h1{margin:0;font-size:54px;line-height:1.03;letter-spacing:-0.02em;}
+    h2{margin:0;font-size:36px;line-height:1.08;letter-spacing:-0.02em;}
+    p{margin:0;color:var(--muted);font-size:18px;line-height:1.45;max-width:68ch;}
+    .subline{font-size:20px;color:var(--muted);}
+    .mono{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size:12px;color:rgba(233,238,252,0.68);
+      letter-spacing:.12em;text-transform:uppercase;
+    }
+    .row{
+      display:grid;grid-template-columns:1.1fr 0.9fr;gap:18px;
+      margin-top:6px;flex:1;min-height:0;
+    }
+    .card{
+      border-radius:var(--radius2);
+      background:rgba(255,255,255,0.06);
+      border:1px solid rgba(255,255,255,0.10);
+      padding:18px 18px;min-height:0;
+      backdrop-filter: blur(10px);
+    }
+    .card h3{
+      margin:0 0 10px 0;
+      font-size:14px;color:rgba(233,238,252,0.82);
+      text-transform:uppercase;letter-spacing:.14em;
+    }
+    .bullets{margin:0;padding-left:18px;color:var(--muted);font-size:16px;line-height:1.55;}
+    .bullets li{margin:10px 0}
+    .twoCol{display:grid;grid-template-columns:1fr 1fr;gap:14px;height:100%;}
+    .metric{
+      display:flex;flex-direction:column;gap:6px;
+      padding:14px 14px;border-radius:16px;
+      background: rgba(255,255,255,0.05);
+      border:1px solid rgba(255,255,255,0.09);
+    }
+    .metric .v{font-size:24px;letter-spacing:-0.01em;font-weight:800;}
+    .metric .l{font-size:12px;color:var(--muted2);text-transform:uppercase;letter-spacing:.14em}
+    .accent{color:var(--neon);text-shadow: 0 0 24px rgba(75,243,255,0.25);}
+    .accent2{color:var(--neon2);text-shadow: 0 0 24px rgba(154,107,255,0.22);}
+    .good{color:var(--good)} .warn{color:var(--warn)}
+    .footer{
+      position:absolute;left:20px;right:20px;bottom:16px;
+      display:flex;align-items:center;justify-content:space-between;
+      color:rgba(233,238,252,0.55);font-size:12px;user-select:none;
+    }
+    .progress{display:flex;align-items:center;gap:10px;}
+    .bar{
+      width:180px;height:6px;background:rgba(255,255,255,0.10);
+      border-radius:999px;overflow:hidden;border:1px solid rgba(255,255,255,0.10);
+    }
+    .fill{
+      height:100%;width:0%;
+      background: linear-gradient(90deg, rgba(75,243,255,0.9), rgba(154,107,255,0.85));
+      box-shadow: 0 0 18px rgba(75,243,255,0.25);
+    }
+    .controls{display:flex;gap:10px;align-items:center;}
+    button{
+      border:none;background: rgba(255,255,255,0.07);
+      color:rgba(233,238,252,0.90);
+      border:1px solid rgba(255,255,255,0.14);
+      border-radius:14px;padding:10px 12px;
+      cursor:pointer;font-weight:700;
+      transition: transform .12s ease, background .12s ease;
+      backdrop-filter: blur(10px);
+    }
+    button:hover{transform: translateY(-1px);background: rgba(255,255,255,0.10)}
+    button:active{transform: translateY(0px) scale(0.99)}
+    .hint{color:rgba(233,238,252,0.45)}
+    .small{font-size:12px;color:var(--muted2)}
+    .badge{
+      display:inline-flex;align-items:center;gap:8px;
+      padding:8px 10px;border-radius:999px;
+      background: rgba(75,243,255,0.09);
+      border:1px solid rgba(75,243,255,0.18);
+      color:rgba(233,238,252,0.88);
+      font-size:12px;letter-spacing:.08em;text-transform:uppercase;
+    }
+    @media (max-width: 860px){
+      h1{font-size:40px} h2{font-size:28px}
+      p{font-size:16px} .slide{padding:28px 22px}
+      .row{grid-template-columns:1fr} .bar{width:140px}
+    }
+  </style>
+</head>
+<body>
+  <div class="grid"></div>
+
+  <svg class="corridors" viewBox="0 0 1440 900" preserveAspectRatio="none" aria-hidden="true">
+    <defs>
+      <linearGradient id="g1" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0" stop-color="rgba(75,243,255,0.0)"/>
+        <stop offset="0.25" stop-color="rgba(75,243,255,0.55)"/>
+        <stop offset="0.75" stop-color="rgba(154,107,255,0.48)"/>
+        <stop offset="1" stop-color="rgba(154,107,255,0.0)"/>
+      </linearGradient>
+      <filter id="blur"><feGaussianBlur stdDeviation="1.25"/></filter>
+    </defs>
+    <path d="M-40,650 C220,520 380,560 620,470 C860,380 1000,360 1240,250 C1360,195 1500,160 1540,140"
+          fill="none" stroke="url(#g1)" stroke-width="4" filter="url(#blur)" opacity="0.8"/>
+    <path d="M-40,710 C260,610 460,640 700,560 C940,480 1120,460 1320,380 C1420,330 1500,300 1540,280"
+          fill="none" stroke="url(#g1)" stroke-width="2.5" opacity="0.65"/>
+    <path d="M-40,580 C210,470 430,510 670,420 C910,330 1080,320 1300,220 C1420,160 1500,120 1540,90"
+          fill="none" stroke="url(#g1)" stroke-width="2" opacity="0.55"/>
+  </svg>
+
+  <div class="wrap">
+    <header>
+      <div class="brand">
+        <div class="mark"></div>
+        <div>
+          <div class="t1">Skylift Protocol</div>
+          <div class="t2">Pitch Deck — 2026</div>
+        </div>
+      </div>
+      <div class="topright">
+        <div class="pill">Regulated Air Corridors</div>
+        <div class="pill">Infrastructure-First</div>
+      </div>
+    </header>
+
+    <main>
+      <section class="deck" id="deck" aria-label="Skylift Pitch Deck">
+        <article class="slide active">
+          <div class="kicker"><span class="dot"></span>Slide 1 / 10</div>
+          <h1>Infrastructure<br/>Before <span class="accent">Traffic</span></h1>
+          <p class="subline">Skylift Protocol is building the regulated, reusable corridor infrastructure that autonomous operators plug into — first in Ireland, then across Europe.</p>
+          <div class="row">
+            <div class="card">
+              <h3>One-liner</h3>
+              <p><strong>We build the highways in the sky</strong> — compliant corridor geometry + digital governance + commercial access, designed to scale from drones to heavy-lift to passenger mobility.</p>
+              <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
+                <span class="badge">Neutral Infrastructure</span>
+                <span class="badge">Regulatory Moat</span>
+                <span class="badge">Asset-Light Model</span>
+              </div>
+            </div>
+            <div class="card">
+              <h3>Positioning</h3>
+              <div class="twoCol">
+                <div class="metric"><div class="l">Category</div><div class="v">Airspace Utility</div></div>
+                <div class="metric"><div class="l">Customer</div><div class="v">Operators & Anchors</div></div>
+                <div class="metric"><div class="l">Value</div><div class="v">Compliance Inheritance</div></div>
+                <div class="metric"><div class="l">Outcome</div><div class="v">Scale Without Chaos</div></div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="slide">
+          <div class="kicker"><span class="dot"></span>Slide 2 / 10</div>
+          <h2>The Problem: Airspace Readiness Gap</h2>
+          <p>Technology is not the bottleneck. The bottleneck is deployable, compliant infrastructure — and the cost of retrofitting later.</p>
+          <div class="row">
+            <div class="card">
+              <h3>What’s happening</h3>
+              <ul class="bullets">
+                <li><strong>Aircraft capability has outpaced airspace readiness</strong> (process, integration, governance).</li>
+                <li><strong>BVLOS scaling is blocked</strong> by fragmented approvals and duplicated safety cases.</li>
+                <li>As density rises, the system risks becoming <strong class="warn">congested + political</strong>.</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h3>The consequence</h3>
+              <ul class="bullets">
+                <li>Operators spend cycles on permissions, not value.</li>
+                <li>Regulators face repeat assessments of the same ground risks.</li>
+                <li>Industrial adoption stalls despite clear productivity gains.</li>
+              </ul>
+              <p class="small" style="margin-top:10px;">If we wait until traffic arrives, infrastructure becomes slow, expensive, and contested.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="slide">
+          <div class="kicker"><span class="dot"></span>Slide 3 / 10</div>
+          <h2>The Inversion: What Fails?</h2>
+          <p>Charlie Munger-style thinking: avoid the paths where returns collapse — then build the one that becomes obvious in hindsight.</p>
+          <div class="row">
+            <div class="card">
+              <h3>Ground infrastructure (what breaks)</h3>
+              <ul class="bullets">
+                <li>CAPEX-heavy, long timelines, high friction.</li>
+                <li>Success creates congestion, congestion creates political risk.</li>
+                <li>Costs scale with expansion; governance becomes contested.</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h3>Sky infrastructure (what compounds)</h3>
+              <ul class="bullets">
+                <li>Compliance-first scaling; density improves safety confidence.</li>
+                <li>Shared access model: <strong>utility economics</strong>.</li>
+                <li><strong class="good">Network effects</strong> through standardised corridors.</li>
+              </ul>
+              <p class="mono" style="margin-top:12px;">Aircraft change. Corridors don’t.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="slide">
+          <div class="kicker"><span class="dot"></span>Slide 4 / 10</div>
+          <h2>The No-Brainer: Cost Asymmetry</h2>
+          <p>Building capacity on the ground is fundamentally more expensive than building compliant capacity in the sky.</p>
+          <div class="row">
+            <div class="card">
+              <h3>Simple comparison</h3>
+              <div class="twoCol">
+                <div class="metric"><div class="l">Ground</div><div class="v">Land + Civil Works</div></div>
+                <div class="metric"><div class="l">Sky</div><div class="v">Geometry + Governance</div></div>
+                <div class="metric"><div class="l">Ground</div><div class="v">Years</div></div>
+                <div class="metric"><div class="l">Sky</div><div class="v">Months</div></div>
+                <div class="metric"><div class="l">Ground</div><div class="v">Objections</div></div>
+                <div class="metric"><div class="l">Sky</div><div class="v">Standards</div></div>
+              </div>
+            </div>
+            <div class="card">
+              <h3>Hook</h3>
+              <p><strong>If we were designing logistics from scratch today, no rational person would start on the ground.</strong></p>
+              <p class="small" style="margin-top:12px;">Skylift exists to capture this asymmetry before congestion forces expensive decisions.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="slide">
+          <div class="kicker"><span class="dot"></span>Slide 5 / 10</div>
+          <h2>The Solution: Airspace Infrastructure Provider</h2>
+          <p>Skylift moves operational and regulatory complexity away from individual operators and into a reusable corridor layer.</p>
+          <div class="row">
+            <div class="card">
+              <h3>Corridor Stack™</h3>
+              <ul class="bullets">
+                <li><strong>Physical:</strong> defined 3D volumes, buffers, contingency zones.</li>
+                <li><strong>Regulatory:</strong> corridor-level safety case + standard ERPs.</li>
+                <li><strong>Digital:</strong> geofencing, telemetry, audit-ready logs.</li>
+                <li><strong>Commercial:</strong> access pricing, reservations, capacity.</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h3>What operators get</h3>
+              <ul class="bullets">
+                <li>Faster deployment via infrastructure inheritance.</li>
+                <li>Clear rules, predictable access, auditable compliance.</li>
+                <li>Neutral, aircraft-agnostic corridor layer.</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <article class="slide">
+          <div class="kicker"><span class="dot"></span>Slide 6 / 10</div>
+          <h2>Why Now: 2026 Is the Window</h2>
+          <p>2026 is the last “cheap” year — before density, standards lock-in, and congestion make infrastructure harder and slower.</p>
+          <div class="row">
+            <div class="card">
+              <h3>Four signals</h3>
+              <ul class="bullets">
+                <li><strong>Capability:</strong> autonomous operations are ready for industrial value.</li>
+                <li><strong>Regulatory alignment:</strong> frameworks are converging for scale.</li>
+                <li><strong>Low congestion:</strong> corridors can be shaped before conflict.</li>
+                <li><strong>Standards not locked:</strong> first movers define reference patterns.</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h3>Bottom line</h3>
+              <p><strong>Once congestion arrives, infrastructure becomes political.</strong></p>
+              <p class="small" style="margin-top:12px;">Skylift is building now, so Ireland becomes a reference market — not a late adopter.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="slide">
+          <div class="kicker"><span class="dot"></span>Slide 7 / 10</div>
+          <h2>Business Model: Corridor Economics</h2>
+          <p>Costs are fixed at the infrastructure layer. Revenue scales with utilisation density — not with owning fleets.</p>
+          <div class="row">
+            <div class="card">
+              <h3>Unit economics</h3>
+              <div class="twoCol">
+                <div class="metric"><div class="l">ARR per node</div><div class="v accent">€90.5k</div></div>
+                <div class="metric"><div class="l">Margin target</div><div class="v good">80%+</div></div>
+                <div class="metric"><div class="l">Model</div><div class="v">Access + Toll + SaaS</div></div>
+                <div class="metric"><div class="l">Mental model</div><div class="v">Toll roads</div></div>
+              </div>
+              <p class="small" style="margin-top:12px;">Revenue streams: access fees, usage/tolls, compliance SaaS, hub hosting.</p>
+            </div>
+            <div class="card">
+              <h3>What this enables</h3>
+              <ul class="bullets">
+                <li>Predictable repeatable revenue per corridor.</li>
+                <li>Scale via certification + integration — not pilots.</li>
+                <li>High switching costs once embedded into compliance workflows.</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <article class="slide">
+          <div class="kicker"><span class="dot"></span>Slide 8 / 10</div>
+          <h2>DePIN + Token: Coordination Layer</h2>
+          <p>Web3 is used for access, accountability, and incentives — not as a substitute for aviation safety.</p>
+          <div class="row">
+            <div class="card">
+              <h3>SKLT utility (calm + compliant)</h3>
+              <ul class="bullets">
+                <li><strong>Access credentials:</strong> corridor plug-in rights.</li>
+                <li><strong>Performance bonds:</strong> stake-to-access accountability.</li>
+                <li><strong>Usage settlement:</strong> metered utilisation.</li>
+                <li><strong>Incentives:</strong> bootstrap node hosting participation.</li>
+              </ul>
+              <p class="mono" style="margin-top:12px;">Coordination, not speculation.</p>
+            </div>
+            <div class="card">
+              <h3>DePIN efficiency</h3>
+              <ul class="bullets">
+                <li>Local hosts provide land/power where appropriate.</li>
+                <li>Lower cash outlay per node; faster network expansion.</li>
+                <li>Auditable utilisation metrics per corridor node.</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <article class="slide">
+          <div class="kicker"><span class="dot"></span>Slide 9 / 10</div>
+          <h2>Why Ireland. Why Us.</h2>
+          <p>Ireland can become Europe’s reference market for regulated low-altitude operations — by building infrastructure before congestion.</p>
+          <div class="row">
+            <div class="card">
+              <h3>Why Ireland</h3>
+              <ul class="bullets">
+                <li>Manageable geography + real industrial need.</li>
+                <li>Clear regulatory environment and EU alignment.</li>
+                <li>Ability to move early and set best practice.</li>
+                <li>Export leverage: Ireland → Europe corridors.</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h3>Founder-led credibility</h3>
+              <p><strong>Darragh O’Brien</strong> blends on-site civil engineering logistics with hands-on drone engineering — focused on compliant deployment, not hype.</p>
+              <ul class="bullets" style="margin-top:12px;">
+                <li>Ground-truth exposure to operational constraints.</li>
+                <li>Infrastructure-first mindset — build the operating layer early.</li>
+                <li>Roadmap from drones → heavy-lift → passenger mobility.</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <article class="slide">
+          <div class="kicker"><span class="dot"></span>Slide 10 / 10</div>
+          <h1>Traffic is<br/><span class="accent2">Inevitable</span>.</h1>
+          <p class="subline">Infrastructure is a choice. Skylift builds the operating layer for autonomous logistics — before congestion, before politics, before retrofitting becomes impossible.</p>
+          <div class="row">
+            <div class="card">
+              <h3>Close</h3>
+              <p><strong>Infrastructure endures. Operators compete.</strong></p>
+              <p class="small" style="margin-top:12px;">Skylift is the constant that makes drones, heavy-lift delivery, and passenger mobility scalable — safely and economically.</p>
+            </div>
+            <div class="card">
+              <h3>Contact</h3>
+              <p><strong>Skylift Technologies</strong></p>
+              <p class="small">Darragh O’Brien — Founder & CEO</p>
+              <p class="small">info@skylift.tech</p>
+              <div style="height:10px"></div>
+              <p class="mono">Pitch Deck — 2026</p>
+              <p class="small hint" style="margin-top:10px;">Press <strong>←</strong>/<strong>→</strong> keys • or use buttons below</p>
+            </div>
+          </div>
+        </article>
+
+        <div class="footer">
+          <div class="progress">
+            <span id="count">1 / 10</span>
+            <div class="bar" aria-hidden="true"><div class="fill" id="fill"></div></div>
+            <span class="hint">Skylift Protocol</span>
+          </div>
+          <div class="controls">
+            <button id="prev" type="button" aria-label="Previous slide">← Prev</button>
+            <button id="next" type="button" aria-label="Next slide">Next →</button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    (function(){
+      const slides = Array.from(document.querySelectorAll('.slide'));
+      const count = document.getElementById('count');
+      const fill = document.getElementById('fill');
+      const prev = document.getElementById('prev');
+      const next = document.getElementById('next');
+      let i = 0;
+
+      function clamp(n,min,max){ return Math.max(min, Math.min(max,n)); }
+      function show(idx){
+        i = clamp(idx, 0, slides.length-1);
+        slides.forEach((s, k)=> s.classList.toggle('active', k===i));
+        count.textContent = (i+1) + " / " + slides.length;
+        fill.style.width = (((i+1)/slides.length)*100) + "%";
+      }
+      function step(d){ show(i + d); }
+
+      prev.addEventListener('click', ()=>step(-1));
+      next.addEventListener('click', ()=>step(1));
+
+      window.addEventListener('keydown', (e)=>{
+        if(e.key === 'ArrowLeft') step(-1);
+        if(e.key === 'ArrowRight') step(1);
+        if(e.key === 'Home') show(0);
+        if(e.key === 'End') show(slides.length-1);
+      });
+
+      let x0 = null;
+      const deck = document.getElementById('deck');
+      deck.addEventListener('touchstart', (e)=>{ x0 = e.touches[0].clientX; }, {passive:true});
+      deck.addEventListener('touchend', (e)=>{
+        if(x0 === null) return;
+        const x1 = e.changedTouches[0].clientX;
+        const dx = x1 - x0;
+        if(Math.abs(dx) > 40){
+          if(dx > 0) step(-1); else step(1);
+        }
+        x0 = null;
+      }, {passive:true});
+
+      show(0);
+    })();
+  </script>
+</body>
+</html>
